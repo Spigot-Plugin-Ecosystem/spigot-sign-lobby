@@ -1,4 +1,4 @@
-# Plugin-Template
+# Sign System (Lobby-Server)
 
 ## Befehle
 #### `/command` (Berechtigung: `permission`)

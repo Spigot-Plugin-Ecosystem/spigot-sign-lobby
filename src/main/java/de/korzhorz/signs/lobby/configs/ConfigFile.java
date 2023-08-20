@@ -1,6 +1,6 @@
-package de.korzhorz.template.configs;
+package de.korzhorz.signs.lobby.configs;
 
-import de.korzhorz.template.Main;
+import de.korzhorz.signs.lobby.Main;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

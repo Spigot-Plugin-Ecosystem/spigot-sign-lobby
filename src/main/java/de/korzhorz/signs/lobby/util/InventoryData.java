@@ -1,4 +1,4 @@
-package de.korzhorz.template.util;
+package de.korzhorz.signs.lobby.util;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;

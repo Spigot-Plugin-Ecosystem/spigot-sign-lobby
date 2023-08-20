@@ -1,9 +1,9 @@
-package de.korzhorz.template;
+package de.korzhorz.signs.lobby;
 
-import de.korzhorz.template.configs.ConfigFiles;
-import de.korzhorz.template.handlers.BungeeCordHandler;
-import de.korzhorz.template.util.ColorTranslator;
-import de.korzhorz.template.util.GitHubUpdater;
+import de.korzhorz.signs.lobby.util.ColorTranslator;
+import de.korzhorz.signs.lobby.util.GitHubUpdater;
+import de.korzhorz.signs.lobby.configs.ConfigFiles;
+import de.korzhorz.signs.lobby.handlers.BungeeCordHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
@@ -11,7 +11,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        final String consolePrefix = "&7[&6Template&7]&r ";
+        final String consolePrefix = "&7[&6Signs&7]&r ";
 
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&7Enabling"));
         

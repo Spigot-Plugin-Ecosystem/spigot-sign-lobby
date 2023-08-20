@@ -1,6 +1,6 @@
 name: Template
 version: '${project.version}'
-main: de.korzhorz.template.Main
+main: de.korzhorz.signs.lobby.Main
 api-version: 1.20
 commands:
 

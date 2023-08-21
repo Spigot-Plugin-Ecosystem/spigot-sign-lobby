@@ -1,5 +1,6 @@
 package de.korzhorz.signs.lobby;
 
+import de.korzhorz.signs.lobby.handlers.MySQLHandler;
 import de.korzhorz.signs.lobby.util.ColorTranslator;
 import de.korzhorz.signs.lobby.util.GitHubUpdater;
 import de.korzhorz.signs.lobby.configs.ConfigFiles;
@@ -17,16 +18,27 @@ public final class Main extends JavaPlugin {
         
         this.getDataFolder().mkdir();
 
-        // Plugin Channels
+        // Plugin channels
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&7Setting up plugin channels"));
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", Main.bungeeCordHandler);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&aPlugin channels set up"));
         
-        // Configuration Files
+        // Configuration files
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&7Loading files"));
         ConfigFiles.initFileContents();
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&aFiles loaded"));
+
+        // MySQL database
+        this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&7Connecting to MySQL database"));
+        if(MySQLHandler.connect()) {
+            this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&aConnected to MySQL database"));
+        } else {
+            this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&cCouldn't connect to MySQL database"));
+            this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&cDisabling plugin"));
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         
         // Commands
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&7Loading commands"));
@@ -38,7 +50,7 @@ public final class Main extends JavaPlugin {
         loadEvents();
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&aEvents loaded"));
         
-        // Update Checker
+        // Update checker
         if(GitHubUpdater.updateAvailable()) {
             this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix));
             this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&9A new update for this plugin is available"));
@@ -51,7 +63,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        MySQLHandler.disconnect();
     }
     
     public void loadCommands() {

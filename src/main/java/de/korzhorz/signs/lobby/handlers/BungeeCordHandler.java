@@ -24,34 +24,15 @@ public class BungeeCordHandler implements PluginMessageListener {
 
         if(subChannel.equals("Forward")) {
             String plugin = byteArrayDataInput.readUTF();
-            if(!(plugin.equals("Signs-ServerDataBroadcast"))) {
+            if(!(plugin.equals("signs:data-updated"))) {
                 return;
             }
 
-            boolean futureServerState = byteArrayDataInput.readBoolean(); // true meaning that the server will be online, false meaning that it's going to be offline
             String serverName = byteArrayDataInput.readUTF();
-            String serverMotd = byteArrayDataInput.readUTF();
-            int serverMaxPlayers = byteArrayDataInput.readInt();
-            int serverOnlinePlayers = byteArrayDataInput.readInt();
-            ServerData serverData = new ServerData(serverName, serverMotd, serverMaxPlayers, serverOnlinePlayers);
 
-            ServerData.serverData.put(serverName, serverData);
+            // TODO: Retrieve server data from database
 
-            if(!(futureServerState)) {
-                ServerData.serverData.remove(serverName);
-            }
-
-            // TODO: Remove this debug output
-            System.out.println("----------");
-            System.out.println("Received server data for server " + serverName);
-            System.out.println("Server is " + (futureServerState ? "online" : "offline"));
-            System.out.println("Motd: " + serverMotd);
-            System.out.println("Max players: " + serverMaxPlayers);
-            System.out.println("Online players: " + serverOnlinePlayers);
-            System.out.println("----------");
-            System.out.println();
-
-            // TODO: Update the signs
+            // TODO: Update signs
         }
     }
 

@@ -39,4 +39,8 @@ public class MySQLHandler {
     public static boolean isConnected() {
         return MySQLHandler.connection != null;
     }
+
+    public static Connection getConnection() {
+        return MySQLHandler.connection;
+    }
 }

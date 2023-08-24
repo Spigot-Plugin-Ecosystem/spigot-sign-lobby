@@ -3,7 +3,6 @@ package de.korzhorz.signs.lobby.handlers;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import de.korzhorz.signs.lobby.Main;
-import de.korzhorz.signs.lobby.util.ServerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

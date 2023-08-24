@@ -5,6 +5,7 @@ import de.korzhorz.signs.lobby.util.ColorTranslator;
 import de.korzhorz.signs.lobby.util.GitHubUpdater;
 import de.korzhorz.signs.lobby.configs.ConfigFiles;
 import de.korzhorz.signs.lobby.handlers.BungeeCordHandler;
+import de.korzhorz.signs.lobby.util.SignDatabase;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
@@ -32,6 +33,9 @@ public final class Main extends JavaPlugin {
         // MySQL database
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&7Connecting to MySQL database"));
         if(MySQLHandler.connect()) {
+            // Create database tables
+            SignDatabase signDatabase = new SignDatabase();
+            signDatabase.createTables();
             this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&aConnected to MySQL database"));
         } else {
             this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&cCouldn't connect to MySQL database"));

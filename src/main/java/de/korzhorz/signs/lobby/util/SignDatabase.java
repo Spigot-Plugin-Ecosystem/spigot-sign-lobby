@@ -13,7 +13,7 @@ import java.util.List;
 public class SignDatabase extends DatabaseHandler {
     @Override
     public void createTables() {
-        if(this.requireDatabaseConnection()) {
+        if(!this.requireDatabaseConnection()) {
             return;
         }
 
@@ -21,7 +21,7 @@ public class SignDatabase extends DatabaseHandler {
         sql += "`serverName` VARCHAR(63) NOT NULL PRIMARY KEY,";
         sql += "`serverMotd` VARCHAR(255) NOT NULL DEFAULT \"\",";
         sql += "`serverMaxPlayers` INT(11) NOT NULL DEFAULT 0,";
-        sql += "`serverOnlinePlayers` INT(11) NOT NULL DEFAULT 0";
+        sql += "`serverOnlinePlayers` INT(11) NOT NULL DEFAULT 0,";
         sql += "`online` TINYINT(1) NOT NULL DEFAULT 0,";
         sql += "`maintenance` TINYINT(1) NOT NULL DEFAULT 0";
         sql += ");";
@@ -34,7 +34,7 @@ public class SignDatabase extends DatabaseHandler {
     }
 
     public List<ServerData> getServerData() {
-        if(this.requireDatabaseConnection()) {
+        if(!this.requireDatabaseConnection()) {
             return new ArrayList<>();
         }
 
@@ -66,7 +66,7 @@ public class SignDatabase extends DatabaseHandler {
     }
 
     public ServerData getServerData(String serverName) {
-        if(this.requireDatabaseConnection()) {
+        if(!this.requireDatabaseConnection()) {
             return null;
         }
 

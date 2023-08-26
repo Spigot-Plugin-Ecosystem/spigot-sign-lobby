@@ -9,8 +9,6 @@ import de.korzhorz.signs.lobby.util.SignDatabase;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
-    public static BungeeCordHandler bungeeCordHandler = new BungeeCordHandler();
-
     @Override
     public void onEnable() {
         final String consolePrefix = "&7[&6Signs&7]&r ";
@@ -21,7 +19,7 @@ public final class Main extends JavaPlugin {
 
         // Plugin channels
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&7Setting up plugin channels"));
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", Main.bungeeCordHandler);
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", BungeeCordHandler.getInstance());
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&aPlugin channels set up"));
         

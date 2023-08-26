@@ -7,13 +7,15 @@ public class ServerData {
     private final String motd;
     private final int maxPlayers;
     private final int onlinePlayers;
+    private final boolean online;
     private final boolean maintenance;
 
-    public ServerData(String name, String motd, int maxPlayers, int onlinePlayers, boolean maintenance) {
+    public ServerData(String name, String motd, int maxPlayers, int onlinePlayers, boolean online, boolean maintenance) {
         this.name = name;
         this.motd = motd;
         this.maxPlayers = maxPlayers;
         this.onlinePlayers = onlinePlayers;
+        this.online = online;
         this.maintenance = maintenance;
     }
 
@@ -33,6 +35,10 @@ public class ServerData {
         return this.onlinePlayers;
     }
 
+    public boolean getOnline() {
+        return this.online;
+    }
+
     public boolean getMaintenance() {
         return this.maintenance;
     }
@@ -42,11 +48,11 @@ public class ServerData {
         if(this == object) return true;
         if(object == null || getClass() != object.getClass()) return false;
         ServerData that = (ServerData) object;
-        return maxPlayers == that.maxPlayers && onlinePlayers == that.onlinePlayers && maintenance == that.maintenance && Objects.equals(name, that.name) && Objects.equals(motd, that.motd);
+        return maxPlayers == that.maxPlayers && onlinePlayers == that.onlinePlayers && online == that.online && maintenance == that.maintenance && Objects.equals(name, that.name) && Objects.equals(motd, that.motd);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, motd, maxPlayers, onlinePlayers, maintenance);
+        return Objects.hash(name, motd, maxPlayers, onlinePlayers, online, maintenance);
     }
 }

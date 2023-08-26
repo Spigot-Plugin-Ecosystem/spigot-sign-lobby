@@ -22,6 +22,7 @@ public class SignDatabase extends DatabaseHandler {
         sql += "`serverMotd` VARCHAR(255) NOT NULL DEFAULT \"\",";
         sql += "`serverMaxPlayers` INT(11) NOT NULL DEFAULT 0,";
         sql += "`serverOnlinePlayers` INT(11) NOT NULL DEFAULT 0";
+        sql += "`online` TINYINT(1) NOT NULL DEFAULT 0,";
         sql += "`maintenance` TINYINT(1) NOT NULL DEFAULT 0";
         sql += ");";
 
@@ -49,9 +50,10 @@ public class SignDatabase extends DatabaseHandler {
                 String serverMotd = result.getString("serverMotd");
                 int serverMaxPlayers = result.getInt("serverMaxPlayers");
                 int serverOnlinePlayers = result.getInt("serverOnlinePlayers");
+                boolean online = result.getBoolean("online");
                 boolean maintenance = result.getBoolean("maintenance");
 
-                ServerData serverData = new ServerData(serverName, serverMotd, serverMaxPlayers, serverOnlinePlayers, maintenance);
+                ServerData serverData = new ServerData(serverName, serverMotd, serverMaxPlayers, serverOnlinePlayers, online, maintenance);
                 serverDataResult.add(serverData);
             }
 
@@ -79,9 +81,10 @@ public class SignDatabase extends DatabaseHandler {
                 String serverMotd = result.getString("serverMotd");
                 int serverMaxPlayers = result.getInt("serverMaxPlayers");
                 int serverOnlinePlayers = result.getInt("serverOnlinePlayers");
+                boolean online = result.getBoolean("online");
                 boolean maintenance = result.getBoolean("maintenance");
 
-                return new ServerData(serverName, serverMotd, serverMaxPlayers, serverOnlinePlayers, maintenance);
+                return new ServerData(serverName, serverMotd, serverMaxPlayers, serverOnlinePlayers, online, maintenance);
             }
         } catch(SQLException e) {
             e.printStackTrace();

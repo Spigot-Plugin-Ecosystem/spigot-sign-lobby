@@ -35,7 +35,7 @@ public class BungeeCordHandler implements PluginMessageListener {
 
             // Retrieve changed server data and update the signs
             ServerData serverData = ServerDataHandler.getUpdatedServerData(serverName);
-            SignHandler.updateSigns(serverData);
+            SignHandler.updateSigns(serverName, serverData);
         }
     }
 

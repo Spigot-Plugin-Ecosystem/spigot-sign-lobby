@@ -5,8 +5,12 @@ import de.korzhorz.signs.lobby.data.ServerData;
 import de.korzhorz.signs.lobby.util.ColorTranslator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.HangingSign;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 
@@ -28,11 +32,10 @@ public class SignHandler {
         ConfigFiles.signs.save();
 
         ServerData serverData = ServerDataHandler.getUpdatedServerData(serverName);
-        SignHandler.updateSigns(serverData);
+        SignHandler.updateSigns(serverName, serverData);
     }
 
-    public static void updateSigns(ServerData serverData) {
-        String serverName = serverData.getName();
+    public static void updateSigns(String serverName, ServerData serverData) {
         List<String> signs = ConfigFiles.signs.getStringList("signs");
         List<String> outdatedSigns = new ArrayList<>();
 
@@ -55,7 +58,11 @@ public class SignHandler {
                 continue;
             }
 
-            SignHandler.setSignData(signBlock, serverData);
+            if(serverData == null) {
+                serverData = new ServerData(serverName, "", 0, 0, false, true);
+            }
+
+            SignHandler.updateSign(signBlock, serverData);
         }
 
         // Delete outdated signs
@@ -100,7 +107,7 @@ public class SignHandler {
                 continue;
             }
 
-            SignHandler.setSignData(signBlock, serverData);
+            SignHandler.updateSign(signBlock, serverData);
         }
 
         // Delete outdated signs
@@ -116,7 +123,7 @@ public class SignHandler {
         ConfigFiles.signs.save();
     }
 
-    private static void setSignData(Sign sign, ServerData serverData) {
+    private static void updateSign(Sign sign, ServerData serverData) {
         SignSide frontSide = sign.getSide(Side.FRONT);
         SignSide backSide = sign.getSide(Side.BACK);
 
@@ -151,5 +158,23 @@ public class SignHandler {
         }
 
         sign.update();
+
+        if(!(ConfigFiles.config.getBoolean("signs.background-blocks"))) {
+            return;
+        }
+
+        if(sign instanceof HangingSign) {
+            return;
+        }
+
+        BlockData blockData = sign.getBlockData();
+        if(!(blockData instanceof Directional directional)) {
+            return;
+        }
+
+        Block backgroundBlock = sign.getBlock().getRelative(directional.getFacing().getOppositeFace());
+        Material material = Material.getMaterial(ConfigFiles.config.getString(configPath + "background-block"));
+        assert material != null;
+        backgroundBlock.setType(material);
     }
 }

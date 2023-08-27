@@ -23,26 +23,31 @@ public class ConfigFiles {
         config.setDefault("mysql.password", "password");
 
         config.setDefault("signs.update-interval", 5000);
+        config.setDefault("signs.background-blocks", true);
 
         config.setDefault("signs.info.ready.0", "%servername%");
         config.setDefault("signs.info.ready.1", "&r[&2&lBetreten&r]");
         config.setDefault("signs.info.ready.2", "&r%motd%");
         config.setDefault("signs.info.ready.3", "&6%onlineplayers%&r / &6&l%maxplayers%");
+        config.setDefault("signs.info.ready.background-block", "LIME_CONCRETE");
 
         config.setDefault("signs.info.full.0", "%servername%");
         config.setDefault("signs.info.full.1", "&r[&6&lBetreten&r]");
         config.setDefault("signs.info.full.2", "&r%motd%");
         config.setDefault("signs.info.full.3", "&6%onlineplayers%&r / &6&l%maxplayers%");
+        config.setDefault("signs.info.full.background-block", "YELLOW_CONCRETE");
 
         config.setDefault("signs.info.maintenance.0", "%servername%");
         config.setDefault("signs.info.maintenance.1", "&r[&4&lWartungen&r]");
         config.setDefault("signs.info.maintenance.2", " ");
         config.setDefault("signs.info.maintenance.3", "&6--&r / &6&l--");
+        config.setDefault("signs.info.maintenance.background-block", "RED_CONCRETE");
 
         config.setDefault("signs.info.offline.0", "%servername%");
         config.setDefault("signs.info.offline.1", "&r[&4&lOffline&r]");
         config.setDefault("signs.info.offline.2", " ");
         config.setDefault("signs.info.offline.3", "&6--&r / &6&l--");
+        config.setDefault("signs.info.offline.background-block", "RED_CONCRETE");
 
         config.save();
 

@@ -37,6 +37,10 @@ public class ServerDataHandler {
         SignDatabase signDatabase = new SignDatabase();
         ServerData serverData = signDatabase.getServerData(serverName);
 
+        if(serverData == null) {
+            return null;
+        }
+
         ServerDataHandler.serverData.put(serverData.getName(), serverData);
 
         return serverData;

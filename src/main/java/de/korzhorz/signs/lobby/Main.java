@@ -1,12 +1,21 @@
 package de.korzhorz.signs.lobby;
 
+import de.korzhorz.signs.lobby.commands.CMD_SetSign;
+import de.korzhorz.signs.lobby.data.ServerData;
 import de.korzhorz.signs.lobby.handlers.MySQLHandler;
+import de.korzhorz.signs.lobby.handlers.ServerDataHandler;
+import de.korzhorz.signs.lobby.handlers.SignHandler;
 import de.korzhorz.signs.lobby.util.ColorTranslator;
 import de.korzhorz.signs.lobby.util.GitHubUpdater;
 import de.korzhorz.signs.lobby.configs.ConfigFiles;
 import de.korzhorz.signs.lobby.handlers.BungeeCordHandler;
 import de.korzhorz.signs.lobby.util.SignDatabase;
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
+import java.util.Objects;
 
 public final class Main extends JavaPlugin {
     @Override
@@ -61,6 +70,18 @@ public final class Main extends JavaPlugin {
         
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&aPlugin enabled &7- Version: &6v" + this.getDescription().getVersion()));
         this.getServer().getConsoleSender().sendMessage(ColorTranslator.translate(consolePrefix + "&aDeveloped by &6KorzHorz"));
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                List<ServerData> updatedServerData = ServerDataHandler.getUpdatedServerData();
+                if(updatedServerData.isEmpty()) {
+                    return;
+                }
+
+                SignHandler.updateSigns(updatedServerData);
+            }
+        }, (int) (((double) ConfigFiles.config.getInt("signs.update-interval")) / 1000 * 20L), (int) (((double) ConfigFiles.config.getInt("signs.update-interval")) / 1000 * 20L));
     }
 
     @Override
@@ -69,7 +90,7 @@ public final class Main extends JavaPlugin {
     }
     
     public void loadCommands() {
-
+        Objects.requireNonNull(this.getCommand("setsign")).setExecutor(new CMD_SetSign());
     }
     
     public void loadEvents() {

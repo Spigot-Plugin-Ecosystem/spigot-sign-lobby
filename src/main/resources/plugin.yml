@@ -3,4 +3,7 @@ version: '${project.version}'
 main: de.korzhorz.signs.lobby.Main
 api-version: 1.20
 commands:
-
+  setsign:
+    description: Set a server sign
+    usage: /setsign <servername>
+    permission: signs.setup

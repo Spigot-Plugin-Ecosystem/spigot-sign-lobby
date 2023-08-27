@@ -30,4 +30,13 @@ public class ServerDataHandler {
 
         return updatedServerData;
     }
+
+    public static ServerData getUpdatedServerData(String serverName) {
+        SignDatabase signDatabase = new SignDatabase();
+        ServerData serverData = signDatabase.getServerData(serverName);
+
+        ServerDataHandler.serverData.put(serverData.getName(), serverData);
+
+        return serverData;
+    }
 }

@@ -4,7 +4,6 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import de.korzhorz.signs.lobby.Main;
 import de.korzhorz.signs.lobby.data.ServerData;
-import de.korzhorz.signs.lobby.util.SignDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,18 +33,9 @@ public class BungeeCordHandler implements PluginMessageListener {
         if(subChannel.equals("signs:update")) {
             String serverName = byteArrayDataInput.readUTF();
 
-            // TODO: Retrieve server data from database
-            SignDatabase signDatabase = new SignDatabase();
-            ServerData serverData = signDatabase.getServerData(serverName);
-            System.out.println(serverData.getName());
-            System.out.println(serverData.getMotd());
-            System.out.println(serverData.getMaxPlayers());
-            System.out.println(serverData.getOnlinePlayers());
-            System.out.println(serverData.getOnline());
-            System.out.println(serverData.getMaintenance());
-            System.out.println("-----");
-
-            // TODO: Update signs
+            // Retrieve changed server data and update the signs
+            ServerData serverData = ServerDataHandler.getUpdatedServerData(serverName);
+            SignHandler.updateSigns(serverData);
         }
     }
 

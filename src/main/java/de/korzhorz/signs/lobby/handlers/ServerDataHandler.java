@@ -20,9 +20,11 @@ public class ServerDataHandler {
                 updatedServerData.add(serverData);
             } else {
                 ServerData oldServerData = ServerDataHandler.serverData.get(serverData.getName());
-                if(!(serverData.equals(oldServerData))) {
-                    updatedServerData.add(serverData);
+                if(serverData.equals(oldServerData)) {
+                    continue;
                 }
+
+                updatedServerData.add(serverData);
             }
 
             ServerDataHandler.serverData.put(serverData.getName(), serverData);

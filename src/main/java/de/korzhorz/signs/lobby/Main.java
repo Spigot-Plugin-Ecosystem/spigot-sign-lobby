@@ -5,13 +5,13 @@ import de.korzhorz.signs.lobby.data.ServerData;
 import de.korzhorz.signs.lobby.handlers.MySQLHandler;
 import de.korzhorz.signs.lobby.handlers.ServerDataHandler;
 import de.korzhorz.signs.lobby.handlers.SignHandler;
+import de.korzhorz.signs.lobby.listeners.EVT_PlayerInteractEvent;
 import de.korzhorz.signs.lobby.util.ColorTranslator;
 import de.korzhorz.signs.lobby.util.GitHubUpdater;
 import de.korzhorz.signs.lobby.configs.ConfigFiles;
 import de.korzhorz.signs.lobby.handlers.BungeeCordHandler;
 import de.korzhorz.signs.lobby.util.SignDatabase;
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -94,6 +94,6 @@ public final class Main extends JavaPlugin {
     }
     
     public void loadEvents() {
-
+        Bukkit.getPluginManager().registerEvents(new EVT_PlayerInteractEvent(), this);
     }
 }

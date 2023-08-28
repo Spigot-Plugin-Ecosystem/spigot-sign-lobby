@@ -43,13 +43,27 @@ public class BungeeCordHandler implements PluginMessageListener {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
         try {
-            dataOutputStream.write(subChannel.getBytes());
+            dataOutputStream.writeUTF(subChannel);
             for(String string : message) {
-                dataOutputStream.write(string.getBytes());
+                dataOutputStream.writeUTF(string);
             }
         } catch(IOException e) {
             e.printStackTrace();
         }
         Bukkit.getServer().sendPluginMessage(JavaPlugin.getPlugin(Main.class), "BungeeCord", byteArrayOutputStream.toByteArray());
+    }
+
+    public void sendPluginMessage(Player player, String subChannel, String[] message) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+        try {
+            dataOutputStream.writeUTF(subChannel);
+            for(String string : message) {
+                dataOutputStream.writeUTF(string);
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        player.sendPluginMessage(JavaPlugin.getPlugin(Main.class), "BungeeCord", byteArrayOutputStream.toByteArray());
     }
 }

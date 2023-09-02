@@ -1,7 +1,7 @@
 package de.korzhorz.signs.lobby.listeners;
 
 import de.korzhorz.signs.lobby.configs.ConfigFiles;
-import de.korzhorz.signs.lobby.handlers.BungeeCordHandler;
+import de.korzhorz.signs.lobby.util.bungeecord.PluginChannelUtil;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -44,8 +44,7 @@ public class EVT_PlayerInteractEvent implements Listener {
             }
 
             String serverName = signData[0];
-            BungeeCordHandler.getInstance().sendPluginMessage(player, "Connect", new String[]{serverName});
+            PluginChannelUtil.getInstance().sendPluginMessage(player, "Connect", serverName);
         }
-
     }
 }

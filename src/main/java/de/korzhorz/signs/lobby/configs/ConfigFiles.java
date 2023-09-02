@@ -1,6 +1,7 @@
 package de.korzhorz.signs.lobby.configs;
 
 import de.korzhorz.signs.lobby.Main;
+import de.korzhorz.signs.lobby.PluginConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.SimpleDateFormat;
@@ -13,14 +14,19 @@ public class ConfigFiles {
     public static ConfigFile messages = new ConfigFile("messages.yml");
     public static ConfigFile updater = new ConfigFile("updater.yml");
     public static ConfigFile signs = new ConfigFile("signs.yml");
-    
+
     public static void initFileContents() {
         // Config
-        config.setDefault("mysql.host", "localhost");
-        config.setDefault("mysql.port", 3306);
-        config.setDefault("mysql.database", "database");
-        config.setDefault("mysql.username", "username");
-        config.setDefault("mysql.password", "password");
+        if(PluginConfig.mySql) {
+            config.setDefault("mysql.host", "localhost");
+            config.setDefault("mysql.port", 3306);
+            config.setDefault("mysql.database", "database");
+            config.setDefault("mysql.username", "username");
+            config.setDefault("mysql.password", "password");
+        }
+        if(PluginConfig.requireBungeeCord) {
+            config.setDefault("bungeecord.enforce", false);
+        }
 
         config.setDefault("signs.update-interval", 5000);
         config.setDefault("signs.background-blocks", true);
@@ -52,7 +58,7 @@ public class ConfigFiles {
         config.save();
 
         // Messages
-        messages.setDefault("prefix", "&6&lSigns &8»");
+        messages.setDefault("prefix", "&6&l" + PluginConfig.pluginName + " &8»");
 
         messages.setDefault("commands.errors.no-player", "&cDu musst ein Spieler sein um diesen Befehl auszuführen.");
         messages.setDefault("commands.errors.no-permission", "&cDu hast keine Rechte um diesen Befehl auszuführen.");

@@ -1,8 +1,15 @@
 package de.korzhorz.signs.lobby.data;
 
+import de.korzhorz.signs.lobby.database.DB_Signs;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class ServerData {
+    public static HashMap<String, ServerData> serverData = new HashMap<>();
+
     private final String name;
     private final String motd;
     private final int maxPlayers;
@@ -54,5 +61,39 @@ public class ServerData {
     @Override
     public int hashCode() {
         return Objects.hash(name, motd, maxPlayers, onlinePlayers, online, maintenance);
+    }
+
+    public static List<ServerData> getUpdatedServerData() {
+        List<ServerData> newServerData = DB_Signs.getInstance().getServerData();
+        List<ServerData> updatedServerData = new ArrayList<>();
+
+        for(ServerData serverData : newServerData) {
+            if(!(ServerData.serverData.containsKey(serverData.getName()))) {
+                updatedServerData.add(serverData);
+            } else {
+                ServerData oldServerData = ServerData.serverData.get(serverData.getName());
+                if(serverData.equals(oldServerData)) {
+                    continue;
+                }
+
+                updatedServerData.add(serverData);
+            }
+
+            ServerData.serverData.put(serverData.getName(), serverData);
+        }
+
+        return updatedServerData;
+    }
+
+    public static ServerData getUpdatedServerData(String serverName) {
+        ServerData serverData = DB_Signs.getInstance().getServerData(serverName);
+
+        if(serverData == null) {
+            return null;
+        }
+
+        ServerData.serverData.put(serverData.getName(), serverData);
+
+        return serverData;
     }
 }

@@ -1,12 +1,12 @@
-package de.korzhorz.signs.lobby.handlers;
+package de.korzhorz.signs.lobby.util.database;
 
-public class DatabaseHandler {
-    public void createTables() {
+public class DatabaseTableUtil {
+    public void createTable() {
 
     }
 
     protected boolean requireDatabaseConnection() {
-        if(MySQLHandler.isConnected()) {
+        if(MySQLUtil.isConnected()) {
             return true;
         }
 

@@ -1,8 +1,8 @@
-package de.korzhorz.signs.lobby.handlers;
+package de.korzhorz.signs.lobby.util;
 
 import de.korzhorz.signs.lobby.configs.ConfigFiles;
 import de.korzhorz.signs.lobby.data.ServerData;
-import de.korzhorz.signs.lobby.util.ColorTranslator;
+import de.korzhorz.signs.lobby.util.messages.CTUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,7 +17,7 @@ import org.bukkit.block.sign.SignSide;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SignHandler {
+public class SignUtil {
     public static void initSign(Sign sign, String serverName) {
         Location location = sign.getLocation();
         List<String> signs = ConfigFiles.signs.getStringList("signs");
@@ -31,8 +31,8 @@ public class SignHandler {
         ConfigFiles.signs.set("signs", signs);
         ConfigFiles.signs.save();
 
-        ServerData serverData = ServerDataHandler.getUpdatedServerData(serverName);
-        SignHandler.updateSigns(serverName, serverData);
+        ServerData serverData = ServerData.getUpdatedServerData(serverName);
+        SignUtil.updateSigns(serverName, serverData);
     }
 
     public static void updateSigns(String serverName, ServerData serverData) {
@@ -62,7 +62,7 @@ public class SignHandler {
                 serverData = new ServerData(serverName, "", 0, 0, false, true);
             }
 
-            SignHandler.updateSign(signBlock, serverData);
+            SignUtil.updateSign(signBlock, serverData);
         }
 
         // Delete outdated signs
@@ -107,7 +107,7 @@ public class SignHandler {
                 continue;
             }
 
-            SignHandler.updateSign(signBlock, serverData);
+            SignUtil.updateSign(signBlock, serverData);
         }
 
         // Delete outdated signs
@@ -150,7 +150,7 @@ public class SignHandler {
                     .replaceAll("%motd%", serverData.getMotd())
                     .replaceAll("%onlineplayers%", String.valueOf(serverData.getOnlinePlayers()))
                     .replaceAll("%maxplayers%", String.valueOf(serverData.getMaxPlayers()));
-            line = ColorTranslator.translate(line);
+            line = CTUtil.translate(line);
             if(!(line.equals(""))) {
                 frontSide.setLine(i, line);
                 backSide.setLine(i, line);

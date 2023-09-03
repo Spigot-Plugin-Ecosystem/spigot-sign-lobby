@@ -17,6 +17,10 @@ public class DB_Signs extends DatabaseTableUtil {
         return instance;
     }
 
+    private DB_Signs() {
+
+    }
+
     @Override
     public void createTable() {
         if(!this.requireDatabaseConnection()) {
